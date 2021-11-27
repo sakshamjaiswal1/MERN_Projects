@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const app = express();
 const pinRoute=require('./routes/Pins')
 const userRoute=require('./routes/Users')
+const path = require("path");
 
 dotenv.config();
 
