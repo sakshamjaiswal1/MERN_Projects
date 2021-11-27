@@ -3,8 +3,9 @@ import "./register.css";
 import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
+import { axiosInstance } from "../config";
 
-function Register({setShowRegister}) {
+function Register({ setShowRegister }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const nameRef = useRef();
@@ -17,19 +18,18 @@ function Register({setShowRegister}) {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
-try{
-    await axios.post('/users/register',newUser)
-    setSuccess(true)
-    setError(false)
-    nameRef.current.value=''
-    emailRef.current.value=''
-    passwordRef.current.value=''
-}
-catch(err){
-    setError(true)
-    setSuccess(false)
-    console.log(err)
-}
+    try {
+      await axiosInstance.post("/users/register", newUser);
+      setSuccess(true);
+      setError(false);
+      nameRef.current.value = "";
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+    } catch (err) {
+      setError(true);
+      setSuccess(false);
+      console.log(err);
+    }
   };
 
   return (
@@ -56,7 +56,10 @@ catch(err){
           </span>
         )}
       </form>
-      <Cancel className="registerCancel" onClick={()=>setShowRegister(false)} />
+      <Cancel
+        className="registerCancel"
+        onClick={() => setShowRegister(false)}
+      />
     </div>
   );
 }

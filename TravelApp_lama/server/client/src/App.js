@@ -6,10 +6,11 @@ import axios from "axios";
 import { format } from "timeago.js";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import { axiosInstance } from "./config";
 import "./app.css";
 function App() {
   const myStorage = window.localStorage;
-  const [currUser, setCurrUser] = React.useState(myStorage.getItem('user'));
+  const [currUser, setCurrUser] = React.useState(myStorage.getItem("user"));
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
   const [newPlace, setNewPlace] = React.useState(null);
@@ -28,7 +29,7 @@ function App() {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("/pins");
+        const res = await axiosInstance.get("/pins");
         setPins(res.data);
       } catch (err) {
         console.log(err);
@@ -59,7 +60,7 @@ function App() {
       long: newPlace.long,
     };
     try {
-      const res = await axios.post("/pins", newPin);
+      const res = await axiosInstance.post("/pins", newPin);
       setPins([...pins, res.data]);
       setNewPlace(null);
       setTitle("");
